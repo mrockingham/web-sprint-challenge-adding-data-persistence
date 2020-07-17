@@ -8,7 +8,16 @@ router.get('/', (req, res)=>{
         res.json(projects)
     })
     .catch(err=>{
-        res.status(500).json({message: 'failed to retrieve projects'})
+        res.status(500).json({message: err})
+    })
+})
+
+router.post('/',(req,res)=>{
+    project.addProject(req.body)
+    .then(project =>{
+        res.status(201).json(req.body)
+    }).catch(error => {
+        res.status(500).json({message: error})
     })
 })
 
