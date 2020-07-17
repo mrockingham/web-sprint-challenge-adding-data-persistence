@@ -12,6 +12,24 @@ router.get('/', (req, res)=>{
     })
 })
 
+
+router.get('/:id/task', (req, res) => {
+    const { id } = req.params;
+  
+    project.getProjectTasks(id)
+    .then(task => {
+      if (task.length) {
+        res.json(task);
+      } else {
+        res.status(404).json({ message: 'Could not find task for project' })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get task' });
+    });
+  });
+
+
 router.post('/',(req,res)=>{
     project.addProject(req.body)
     .then(project =>{
